@@ -18,7 +18,7 @@ module.exports = (sequelize, DataTypes) => {
     }
   });
 
-  // Define the association with the Task model
+
   Project.associate = (models) => {
     Project.hasMany(models.Task, { foreignKey: 'projectId', onDelete: 'CASCADE' });
   };

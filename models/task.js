@@ -18,7 +18,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     projectId: {
       type: DataTypes.INTEGER,
-      allowNull: true,  // Allows projectId to be null
+      allowNull: true, 
     },
   });
 

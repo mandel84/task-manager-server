@@ -31,7 +31,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    // The Projects table should be dropped after the Tasks table
     await queryInterface.dropTable('Projects');
   }
 };

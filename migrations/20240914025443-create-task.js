@@ -26,7 +26,7 @@ module.exports = {
           model: 'Projects',
           key: 'id',
         },
-        onDelete: 'CASCADE' // Deletes tasks if the project is deleted
+        onDelete: 'CASCADE' 
       },
       createdAt: {
         allowNull: false,
@@ -39,10 +39,8 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    // Remove the foreign key constraint first
     await queryInterface.removeConstraint('Tasks', 'Tasks_projectId_fkey');
 
-    // Then drop the Tasks table
     await queryInterface.dropTable('Tasks');
   }
 };

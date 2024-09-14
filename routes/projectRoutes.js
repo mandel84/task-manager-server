@@ -1,12 +1,12 @@
 const express = require('express');
 const router = express.Router();
-const { Project,Task } = require('../models'); // Assuming Project is your Sequelize model
+const { Project,Task } = require('../models'); 
 
-// Get all projects
+
 router.get('/', async (req, res) => {
     try {
       const projects = await Project.findAll({
-        include: [Task], // Include tasks for each project
+        include: [Task], 
       });
       res.json(projects);
     } catch (error) {
@@ -20,9 +20,8 @@ router.get('/:projectId', async (req, res) => {
     try {
       const { projectId } = req.params;
   
-      // Fetch the project and its tasks
       const project = await Project.findByPk(projectId, {
-        include: [Task], // Include tasks associated with the project
+        include: [Task], 
       });
   
       if (!project) {
@@ -38,7 +37,6 @@ router.get('/:projectId', async (req, res) => {
 
 
 
-// Get a project by ID
 router.get('/:id', async (req, res) => {
   try {
     const project = await Project.findByPk(req.params.id);
@@ -52,7 +50,6 @@ router.get('/:id', async (req, res) => {
   }
 });
 
-// Create a new project
 router.post('/', async (req, res) => {
   try {
     const newProject = await Project.create(req.body);
@@ -63,19 +60,16 @@ router.post('/', async (req, res) => {
   }
 });
 
-//Create a task for a specific project
 router.post('/:projectId/tasks', async (req, res) => {
   try {
     const { title, description, dueDate, priority } = req.body;
     const { projectId } = req.params;
 
-    // Check if the project exists
     const project = await Project.findByPk(projectId);
     if (!project) {
       return res.status(404).json({ message: 'Project not found' });
     }
 
-    // Create the new task under the specific project
     const task = await Task.create({
       title,
       description,
@@ -93,7 +87,6 @@ router.post('/:projectId/tasks', async (req, res) => {
 
 
 
-// Update a project
 router.put('/:id', async (req, res) => {
   try {
     const project = await Project.findByPk(req.params.id);
@@ -108,7 +101,6 @@ router.put('/:id', async (req, res) => {
   }
 });
 
-// Delete a project
 router.delete('/:id', async (req, res) => {
   try {
     const project = await Project.findByPk(req.params.id);

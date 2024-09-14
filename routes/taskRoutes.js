@@ -5,7 +5,6 @@ const { Project,Task } = require('../models');
 
 
 
-// Get all tasks
 router.get('/', async (req, res) => {
   try {
     const tasks = await Task.findAll();
@@ -16,12 +15,10 @@ router.get('/', async (req, res) => {
   }
 });
 
-// Get tasks for a specific project
 router.get('/projects/:projectId', async (req, res) => {
     try {
       const { projectId } = req.params;
   
-      // Fetch tasks belonging to the specific project
       const tasks = await Task.findAll({ where: { projectId } });
   
       if (!tasks.length) {
@@ -38,23 +35,21 @@ router.get('/projects/:projectId', async (req, res) => {
 
 
 
-// Create a new task (optional projectId)
 router.post('/', async (req, res) => {
   try {
     const { title, description, dueDate, priority, projectId } = req.body;
 
-    // Ensure required fields are provided
     if (!title || !description || !dueDate || !priority) {
       return res.status(400).json({ message: 'Missing required fields' });
     }
 
-    // Create the task with or without projectId
+   
     const newTask = await Task.create({
       title,
       description,
       dueDate,
       priority,
-      projectId: projectId || null,  // If projectId is provided, include it; otherwise, use null
+      projectId: projectId || null,  
     });
 
     res.status(201).json(newTask);
@@ -73,7 +68,6 @@ router.put('/:id', async (req, res) => {
         return res.status(404).json({ message: 'Task not found' });
       }
   
-      // Ensure priority is valid before updating
       const validPriorities = ['low', 'medium', 'high'];
       if (!validPriorities.includes(req.body.priority)) {
         return res.status(400).json({ message: 'Invalid priority value' });
@@ -89,7 +83,7 @@ router.put('/:id', async (req, res) => {
   
 
 
-// Delete a task
+
 router.delete('/:id', async (req, res) => {
   try {
     const task = await Task.findByPk(req.params.id);
